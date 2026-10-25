@@ -1,0 +1,4 @@
+monitor,roc_auc,burst_days,alarm_days,alarm_tp,delay,before_onset
+mean_score,0.3616382036685642,62,3,0,85,2
+ks_score,0.5689437065148639,62,18,14,26,2
+ph_score,0.4623655913978495,62,116,47,0,29

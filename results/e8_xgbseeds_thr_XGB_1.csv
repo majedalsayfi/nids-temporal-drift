@@ -1,0 +1,8 @@
+model,seed,monitor,threshold
+XGB,1,alert_rate,0.6777751701478526
+XGB,1,uncertainty,0.0017601501994836894
+XGB,1,internal_alert_share,0.2154818325434439
+XGB,1,port_surge,0.2963778040072016
+XGB,1,dom_all,0.8611240611886654
+XGB,1,dom_alerts,0.96496488961422
+XGB,1,dom_nonalerts,0.8739321080218359
