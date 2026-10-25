@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite the article below."
+title: "Random Splits Hide False-Alarm Bursts: reproduction package"
+authors:
+  - family-names: Alsayfi
+    given-names: Majed S.
+    affiliation: "Department of Cybersecurity, College of Computer Science and Engineering, Taibah University, Medina 42353, Saudi Arabia"
+    email: msayfi@taibahu.edu.sa
+license: MIT
+repository-code: "https://github.com/majedalsayfi/nids-temporal-drift"
+preferred-citation:
+  type: article
+  title: "Random Splits Hide False-Alarm Bursts: Temporal Evaluation, Label-Free Early Warning and Label-Efficient Updating of Machine-Learning Network Intrusion Detection on Real Traffic"
+  authors:
+    - family-names: Alsayfi
+      given-names: Majed S.
+  journal: "IEEE Access"
+  year: 2026
+  notes: "Under review"
