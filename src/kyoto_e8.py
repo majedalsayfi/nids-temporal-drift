@@ -33,12 +33,12 @@ def unc(model, ix):
 
 rows = []
 for name in models:
-    for seed in (seeds if name == "RF" else seeds[:1]):
+    for seed in seeds:
         tests = {m: capi(byM[m], NTM, seed + 1) for m in months}
         init = capi(np.concatenate([byM[m] for m in init_m]), NTR, seed)
         base = make_model(name, seed).fit(Xv[init], y[init])
         thr = max(unc(base, tests[m])[0] for m in cal_m)
-        for strat in ["STATIC", "EXPANDING", "SLIDING", "MONTHLY-200", "TRIG-200[unc]"]:
+        for strat in os.environ.get("STRATS", "STATIC,EXPANDING,SLIDING,MONTHLY-200,TRIG-200[unc]").split(","):
             model, labels, extra, n_upd = base, 0, [], 0
             rng = np.random.default_rng(100 + seed)
             for i, m in enumerate(stream):
