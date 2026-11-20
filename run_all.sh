@@ -24,6 +24,11 @@ LGBM_JOBS=1 python3 src/e10_dup_boot.py && python3 src/e10_analyze.py
 python3 src/e5_diagnose.py $S results/e5.csv && cp results/e5_daily.csv $R/e5_daily.csv
 RES=$R FIG=figures_prop python3 src/analyze.py
 
+# Revision experiments (E12, E13, E16) on the proportional sample
+LGBM_JOBS=1 python3 src/e12_counts.py && python3 src/e12_analyze.py
+LGBM_JOBS=1 python3 src/e13_matched.py && python3 src/e13_analyze.py
+LGBM_JOBS=1 python3 src/e16_ports.py && python3 src/e16_analyze.py
+
 # 3. Daily-resolution LUFlow experiments (Tables 7, 8; Fig 5)
 python3 src/e7_monitor.py $S results/e7_rf.csv RF dom
 python3 src/e7_monitor.py $S results/e7_cheap.csv RF,XGB,LGBM,DT,MLP
@@ -38,9 +43,21 @@ LGBM_JOBS=1 NS=200 MONITORS=uncertainty,port_surge python3 src/e8_response.py $S
 python3 src/analyze_e8.py results/e8_rf0.csv results/e8_rfseeds.csv results/e8_xgb.csv results/e8_xgbseeds.csv results/e8_lgbm.csv results/e8_lgbmseeds.csv
 python3 src/fig_e8.py
 
+# Revision experiments on the daily stream (E14 label budgets, E15 monitors)
+python3 src/e14_budget.py results/e14_rf.csv RF 0,1,2
+STRATS=TRIG-UNC-AL-200 python3 src/e14_budget.py results/e14_al_xgb.csv XGB 0,1,2
+LGBM_JOBS=1 STRATS=TRIG-UNC-AL-200 python3 src/e14_budget.py results/e14_al_lgbm.csv LGBM 0,1,2
+python3 src/e14_analyze.py results/e14_rf.csv && python3 src/fig_e14.py
+python3 src/e8_to_e14.py && python3 src/e14_analyze.py results/e14_boost_from_e8.csv results/e14_al_lgbm.csv results/e14_al_xgb.csv
+LGBM_JOBS=1 python3 src/e15_monitors.py RF,XGB,LGBM,DT,MLP 0,1,2 && python3 src/e15_analyze.py && python3 src/e15_boot.py
+
 # 4. Kyoto 2006+ (Tables 11, 12; Fig 6). Needs the AnoShift *_subset.parquet files in data/kyoto/raw
 python3 src/kyoto_e1.py results_kyoto/ke1.csv
 python3 src/kyoto_analyze.py
 python3 src/kyoto_diag.py
 SEEDS=0 python3 src/kyoto_e8.py results_kyoto/ke8_s0.csv
+SEEDS=1,2 python3 src/kyoto_e8.py results_kyoto/ke8_s12.csv   # (the article ran XGB seeds 1-2 in parts: ke8_x1, ke8_x2, ke8_xm)
+python3 src/kyoto_e8_analyze.py
+python3 src/kyoto_counts.py
+python3 src/kyoto_monitors.py && python3 src/kyoto_monitors_analyze.py
 python3 src/kyoto_fig.py
